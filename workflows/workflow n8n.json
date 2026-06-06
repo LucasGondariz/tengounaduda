@@ -1,5 +1,5 @@
 {
-  "name": "Web 4 IAs (OpenRouter)",
+  "name": "tengounaduda",
   "nodes": [
     {
       "parameters": {
@@ -9,13 +9,13 @@
           "allowedOrigins": "*"
         }
       },
-      "id": "9fc29601-b3c1-4880-90ef-83ffdf497519",
+      "id": "f7dd161f-9f28-48b4-89a5-89f7f767955c",
       "name": "Webhook (sirve la web)",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        416,
-        160
+        0,
+        0
       ],
       "webhookId": "web-front"
     },
@@ -33,13 +33,13 @@
         },
         "options": {}
       },
-      "id": "a2bb5bf0-2bb4-4430-aa2e-583b818bd145",
+      "id": "36c1efc1-6118-4396-b8c4-1af951af3381",
       "name": "HTML (pegá tu web acá)",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        640,
-        160
+        224,
+        0
       ]
     },
     {
@@ -58,13 +58,13 @@
           }
         }
       },
-      "id": "612f5605-1aac-40c2-9e74-a935bc0e4056",
+      "id": "c75647b2-fb45-412f-89c1-b1a0e77af87f",
       "name": "Responder HTML",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        880,
-        160
+        464,
+        0
       ]
     },
     {
@@ -76,13 +76,13 @@
           "allowedOrigins": "*"
         }
       },
-      "id": "146307ff-6c96-4153-a837-1e4672ef18f8",
+      "id": "ddbe584b-cf53-482f-a366-cf6083ef9a16",
       "name": "Webhook (recibe consulta)",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        416,
-        512
+        0,
+        352
       ],
       "webhookId": "consulta-api"
     },
@@ -110,13 +110,13 @@
           "timeout": 60000
         }
       },
-      "id": "d231c171-dadc-44dd-8cea-0f7bb1a85f19",
+      "id": "76d45ec5-1cbd-4c7d-a203-6359f76f1c20",
       "name": "Consultar IA",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        656,
-        512
+        240,
+        352
       ],
       "onError": "continueRegularOutput"
     },
@@ -124,13 +124,13 @@
       "parameters": {
         "jsCode": "// El body llega como string (text/plain), lo parseamos.\nlet entrada = {};\ntry { entrada = JSON.parse($('Webhook (recibe consulta)').first().json.body || '{}'); } catch(e) {}\nconst nombre = entrada.nombre || 'IA';\nconst j = $input.first().json || {};\n\nconst texto = j?.choices?.[0]?.message?.content;\nif (texto) {\n  return [{ json: { modelo: nombre, texto, ok: true } }];\n}\n\nlet motivo = 'Sin respuesta.';\nif (j?.error?.message) motivo = 'Sin respuesta: ' + j.error.message;\nelse if (j?.message) motivo = 'Sin respuesta: ' + j.message;\nelse if (j?.error) motivo = 'Sin respuesta: ' + JSON.stringify(j.error);\nreturn [{ json: { modelo: nombre, texto: motivo, ok: false } }];"
       },
-      "id": "3df933fe-106a-413f-aa9f-dcf320783e3f",
+      "id": "d4b11d4e-60a5-42e5-9fca-b522af9d84db",
       "name": "Formatear salida",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        896,
-        512
+        480,
+        352
       ]
     },
     {
@@ -139,13 +139,13 @@
         "responseBody": "={{ $json }}",
         "options": {}
       },
-      "id": "aae059aa-a95f-4039-a5a5-065c7d9611db",
+      "id": "caf99641-966e-46a8-8f20-0641286687ff",
       "name": "Responder JSON",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        1136,
-        512
+        720,
+        352
       ]
     }
   ],
@@ -212,10 +212,10 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "91d2430e-273b-42e2-957c-ea23b45208ba",
+  "versionId": "282e0c89-29be-4bc1-b39e-eda63f61c516",
   "meta": {
     "instanceId": "dfcc69970283aee62871e2fa9e881d54b0fb8f30a110a052ce0487e5c7fa310d"
   },
-  "id": "uIdBcGbwzhUTtfex",
+  "id": "oGrmV0vznURzh42J",
   "tags": []
 }
