@@ -24,14 +24,19 @@ Navegador  --POST /webhook/consulta--> n8n --> OpenRouter --> IA   (x4 en parale
 ## Requisitos
 
 - [Docker](https://docs.docker.com/get-docker/)
-- Una API key gratuita de OpenRouter: la podes conseguir en https://openrouter.ai desde **Settings → Keys**.
+- Una API key gratuita de OpenRouter: la podes conseguir en https://openrouter.ai desde **Home → API Keys → New Key**, colocando los siguientes datos de ejemplo:
+    - Name: "tengounaduda"
+    - Credit limit: ""
+    - Reset limit every: ""
+    - Expiration: "No expiration"
 
 ---
 
 ## Puesta en marcha
 
-**1. Cloná el repo**
+**1. Cloná el repo en tu carpeta**
 ```bash
+cd "LA_CARPETA_DONDE_COPIAR"
 git clone https://github.com/LucasGondariz/tengounaduda.git
 cd tengounaduda
 ```
@@ -42,28 +47,29 @@ Copiá la plantilla de variables de entorno y editá el archivo `.env` con tu ke
 ```bash
 cp .env.example .env
 ```
-Abrí `.env` y reemplazá el valor:
+AEdita el `.env` reemplazando su texto con tu api token:
 ```
-OPENROUTER_API_KEY=api_token_real
+"OPENROUTER_API_KEY=TU_API_TOKEN" | Set-Content .env
 ```
 > El archivo `.env` está en `.gitignore`, así que la key nunca se sube a GitHub.
 
 **3. Levantá n8n**
+Tene corriendo el Docker Desktop y ejecuta:
 ```bash
 docker compose up -d
 ```
-Esperá unos segundos y abrí http://localhost:8645. La primera vez n8n te pide crear un usuario local (es solo para tu instancia).
+Esperá unos segundos y abrí http://localhost:8645. La primera vez n8n te pide crear un usuario local (es solo para tu instancia). Dentro de la web ingresar a "Start from scratch"
 
 **4. Importá el workflow**
 
-En n8n: menú **⋯ (arriba a la derecha) → Import from File** → elegí `workflows/workflow n8n.json`.
+En n8n: menú **⋯ (arriba a la derecha) → Import from File** → elegí el workflow que clonaste `tengounaduda/workflows/workflow n8n.json`.
 
 **5. Activá el workflow**
 
-Con el workflow abierto, prender el toggle **Active** (arriba a la derecha).
+Con el workflow abierto, prender el toggle **Publish** (arriba a la derecha). Te va a preguntar el nombre de version, dejalo por defecto y publica. Cuando te recomiende acciones podes ignorarlas.
 
 **6. Usá la web**
 
-Abrí 👉 **http://localhost:5678/webhook/web**
+Abrí 👉 **http://localhost:8645/webhook/web**
 
 Escribí una consulta! ✨
